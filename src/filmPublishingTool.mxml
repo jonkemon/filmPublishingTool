@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml"
+		xmlns:views="com.telecoms.media.videowizard.views.*"
+		xmlns:control="com.telecoms.media.videowizard.control.*"
+		layout="vertical" 
+		borderStyle="outset" 
+		borderColor="#008DEF" backgroundGradientColors="[#FFFFFF, #DBDBDB]" verticalAlign="left" horizontalAlign="center">
+		
+		<mx:Script>
+			<![CDATA[
+				
+				import com.telecoms.media.videowizard.control.UploadVideoFilesClass;
+				import mx.controls.SWFLoader;
+				import com.telecoms.media.videowizard.model.vo.UploadStatus;
+				
+				private var videoUrl:String = "";
+				private var videoHeight:String = "";
+				private var videoWidth:String = "";
+				
+				public var fileStatus:UploadStatus = new UploadStatus;
+				
+				private function createCode(event:Event):void {
+					var playerSelect:String = event.currentTarget.selectedItem.data;
+					var folderSelect:String = event.currentTarget.selectedItem.folder;
+					var movie:String = movieURL.text;
+					var image:String = imageURL.text;
+					videoHeight = vHeight.text;
+					videoWidth = vWidth.text;
+					var finalCode:String = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="'+ videoWidth +'" height="'+ videoHeight +'" id="videoDemo_final" align="middle"><param name="allowScriptAccess" value="sameDomain" /><param name="allowFullScreen" value="true" /><param name="movie" value="'+ playerSelect +'?file=http://cdn.informa.com.lg1x8.simplecdn.net/'+ folderSelect +'/'+ movie +'&image='+ image +'" /><param name="quality" value="high" /><param name="bgcolor" value="#000000" />	<embed src="'+ playerSelect +'?file=http://cdn.informa.com.lg1x8.simplecdn.net/'+ folderSelect +'/'+ movie +'&image='+ image +'" quality="high" bgcolor="#000000" width="'+ videoWidth +'" height="'+ videoHeight +'" name="videoDemo_final" align="middle" allowScriptAccess="sameDomain" allowFullScreen="true" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" /></object>';
+					if(folderSelect=='com_series_header'){
+						finalCode = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="'+ videoWidth +'" height="'+ videoHeight +'" id="videoDemo_final" align="middle"><param name="allowScriptAccess" value="sameDomain" /><param name="scale" value="exactfit" /><param name="allowFullScreen" value="true" /><param name="movie" value="'+ playerSelect +'?file=http://cdn.informa.com.lg1x8.simplecdn.net/com_series/'+ movie +'" /><param name="quality" value="high" /><param name="bgcolor" value="#000000" />	<embed src="'+ playerSelect +'?file=http://cdn.informa.com.lg1x8.simplecdn.net/com_series/'+ movie +'" quality="high" bgcolor="#000000" width="'+ videoWidth +'" height="'+ videoHeight +'" name="videoDemo_final" align="middle" allowScriptAccess="sameDomain" scale="exactfit" allowFullScreen="true" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" /></object>';
+					}
+					if(folderSelect=='com_series'){
+						finalCode = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="'+ videoWidth +'" height="'+ videoHeight +'" id="videoDemo_final" align="middle"><param name="allowScriptAccess" value="sameDomain" /><param name="allowFullScreen" value="true" /><param name="movie" value="'+ playerSelect +'?file=http://cdn.informa.com.lg1x8.simplecdn.net/'+ folderSelect +'/'+ movie +'" /><param name="quality" value="high" /><param name="bgcolor" value="#000000" />	<embed src="'+ playerSelect +'?file=http://cdn.informa.com.lg1x8.simplecdn.net/'+ folderSelect +'/'+ movie +'" quality="high" bgcolor="#000000" width="'+ videoWidth +'" height="'+ videoHeight +'" name="videoDemo_final" align="middle" allowScriptAccess="sameDomain" allowFullScreen="true" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" /></object>';
+					}
+					resultCode.text = finalCode;
+					
+				}
+				
+			]]>
+		</mx:Script>
+		
+		<mx:VBox id="wrapper" horizontalAlign="center">
+			
+			<mx:Label text="Flash Video Wizard" fontFamily="Verdana" fontWeight="bold" fontSize="19" textAlign="center"/>
+			
+			<!--Upload files section-->
+			
+			<views:UploadForm/>
+			
+			<!--Movie Details section-->
+			<mx:Label text="Enter your Movie Player details here" fontFamily="Verdana" fontWeight="bold" fontSize="12" textAlign="center"/>
+			<mx:Panel width="590" headerHeight="0" borderStyle="solid" horizontalAlign="center" verticalAlign="middle" paddingTop="10">               
+				<mx:Form width="560" height="170">
+					<mx:FormItem label="Movie:">
+						<mx:TextInput id="movieURL" width="438"/>
+					</mx:FormItem>
+					<mx:FormItem label="Image:">
+						<mx:TextInput id="imageURL" width="438"/>
+					</mx:FormItem>
+					<mx:FormItem label="Height:">
+						<mx:TextInput id="vHeight" width="200" text=""/>
+					</mx:FormItem>
+					<mx:FormItem label="Width:">
+						<mx:TextInput id="vWidth" width="200" text=""/>
+					</mx:FormItem>                    
+					<mx:FormItem label="Player:">
+						<mx:ComboBox id="playerSelect" width="438" change="createCode(event)" editable="false">
+							<mx:dataProvider>
+								<mx:Object label="Choose your Website Player"/>
+								<mx:Object label="IIR Player" data="http://squiz.informatm.com/__data/assets/file/0020/54245/jwplay.swf" folder="iir"/>
+								<mx:Object label="ComWorld Header" data="http://squiz.informatm.com/__data/assets/file/0006/124719/jmPlayer.swf" folder="com_series_header"/>
+								<mx:Object label="ComWorld Page Player" data="http://squiz.informatm.com/__data/assets/file/0020/54245/jwplay.swf" folder="com_series"/>
+								<mx:Object label="DTVE" data="http://squiz.informatm.com/__data/assets/file/0020/54245/jwplay.swf" folder="dtve_net"/>
+								<mx:Object label="LTE Player" data="http://squiz.informatm.com/__data/assets/file/0020/54245/jwplay.swf" folder="lte"/>
+								<mx:Object label="IPTV Player" data="http://squiz.informatm.com/__data/assets/file/0020/54245/jwplay.swf" folder="iptv"/>
+								<mx:Object label="Squiz Black Player" data="http://squiz.informatm.com/__data/assets/file/0020/54173/itmplayer.swf" />
+								<mx:Object label="IPTV-News Video Player" data="http://squiz.informatm.com/__data/assets/file/0020/54245/jwplay.swf" folder="iptvnews"/>
+								<mx:Object label="WiMAX Video Player" data="http://squiz.informatm.com/__data/assets/file/0020/54245/jwplay.swf" folder="wimax"/>
+							</mx:dataProvider>
+						</mx:ComboBox>    
+					</mx:FormItem>
+				</mx:Form> 
+			</mx:Panel>
+			
+			<!--Output Code section-->
+			<mx:Label text="Paste this code into your site" fontFamily="Verdana" fontWeight="bold" fontSize="12" textAlign="center"/>     
+			<mx:Panel width="590" borderStyle="solid" horizontalAlign="center" verticalAlign="middle">
+				<mx:TextArea id = 'resultCode' fontWeight = 'bold' color = 'green' height="150" text="" fontSize="16" borderColor="#FFFFFF" width="560"/>
+			</mx:Panel>
+		</mx:VBox>	
+</mx:WindowedApplication>

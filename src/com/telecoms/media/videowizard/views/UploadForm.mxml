@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<control:UploadVideoFilesClass
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:control="com.telecoms.media.videowizard.control.*">
+	
+	<mx:Panel layout="vertical" headerHeight="0" borderStyle="solid" horizontalAlign="right" verticalAlign="bottom" backgroundColor="#FFFFFF" width="590" paddingTop="10" paddingRight="40">
+		<mx:ComboBox id="SiteFolderSelect" width="500" change="uploadFolderSelect = SiteFolderSelect.selectedItem.folder" editable="false">
+            <mx:dataProvider>
+                <mx:Object label="Choose your Website" folder="general"/>
+                <mx:Object label="IIR Player" folder="iir"/>
+                <mx:Object label="ComWorld" folder="com_series"/>
+                <mx:Object label="DTVE" folder="dtve_net"/>
+                <mx:Object label="LTE Player" folder="lte"/>
+                <mx:Object label="IPTV Player" folder="iptv"/>
+                <mx:Object label="IPTV-News Video Player" folder="iptvnews"/>
+                <mx:Object label="ComWorld Video Player" folder="com_series"/>
+                <mx:Object label="WiMAX Video Player" folder="wimax"/>
+            </mx:dataProvider>
+        </mx:ComboBox>
+		<mx:HBox verticalAlign="middle">
+			<mx:Label text="Upload Video File to the server" fontWeight="bold" paddingLeft="10"/>
+			<mx:Label text="{_fileStatus.uploadStatus}" id="statusText" color="#ff0000"/>
+			<mx:Button click="uploadFile();" label="Browse File"/>
+			<mx:Button click="uploadFileHandler(uploadFolderSelect);" label="Upload File"/>
+		</mx:HBox>
+	</mx:Panel>
+</control:UploadVideoFilesClass>
